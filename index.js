@@ -75,13 +75,6 @@ function calculatePayroll(ees) {
     return ees.reduce( (acc, cur) => acc + allWagesFor(cur), 0);
 }
 
-// Could be a slower version:
-function s_calculatePayroll(ees) {
-    const eePays = ees.map( ee => allWagesFor(ee) );
-    const reducer = (acc, cur) => acc + cur;
-    return eePays.reduce(reducer);
-}
-
 function findEmployeeByFirstName(ees, fn) {
     return ees.filter( ee => ee.firstName === fn )[0];  // Returns first result of the array returned by the filter
 }
@@ -104,85 +97,3 @@ function vf_calculatePayroll(ees) {    // Rewritten with a vanilla for loop
     }
     return total;
 }
-
-// let src = [
-// ["Loki", "Laufeysson-Odinsson", "HR Representative", 35],
-// ["Natalia", "Romanov", "CEO", 150]
-// ]
-// let emps = createEmployeeRecords(src)
-
-// console.log(emps);
-// // console.log(findEmployeeByFirstName(emps, "Loki"));
-// findEmployeeByFirstName(emps, "Loki");
-
-// cRecord = createEmployeeRecord(["Julius", "Caesar", "General", 27])
-// // Earns 324
-// updatedBpRecord = createTimeInEvent(cRecord, "0044-03-14 0900")
-// updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-14 2100")
-// // Earns 54
-// updatedBpRecord = createTimeInEvent(cRecord, "0044-03-15 0900")
-// updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-15 1100")
-// // 324 + 54
-// const w = allWagesFor(cRecord);
-
-// console.log(w);
-
-// function filterByDate(punchIns, dateStr) {
-//     if (punchIns) {}
-// }
-
-const eeRec01 = {
-    firstName : 'a1',
-    familyName : 'a2',
-    title : 'at',
-    payPerHour : 1,
-    timeInEvents : [
-        {type : 'TimeIn', hour : 730, date : '2021-04-12'},
-        {type : 'TimeIn', hour : 730, date : '2021-04-13'},
-        {type : 'TimeIn', hour : 730, date : '2021-04-14'},
-        {type : 'TimeIn', hour : 730, date : '2021-04-15'},
-        {type : 'TimeIn', hour : 730, date : '2021-04-16'}
-    ],
-    timeOutEvents : [
-        {type : 'TimeOut', hour : 1730, date : '2021-04-12'},
-        {type : 'TimeOut', hour : 1830, date : '2021-04-13'},
-        {type : 'TimeOut', hour : 1930, date : '2021-04-14'},
-        {type : 'TimeOut', hour : 2030, date : '2021-04-15'},
-        {type : 'TimeOut', hour : 2130, date : '2021-04-16'}
-    ]
-}
-
-const users = [
-    { firstName: "Niky", lastName: "Morgan", favoriteColor: "Blue", favoriteAnimal: "Jaguar" },
-    { firstName: "Tracy", lastName: "Lum", favoriteColor: "Yellow", favoriteAnimal: "Penguin" },
-    { firstName: "Josh", lastName: "Rowley", favoriteColor: "Blue", favoriteAnimal: "Penguin" },
-    { firstName: "Kate", lastName: "Travers", favoriteColor: "Red", favoriteAnimal: "Jaguar" },
-    { firstName: "Avidor", lastName: "Turkewitz", favoriteColor: "Blue", favoriteAnimal: "Penguin" },
-    { firstName: "Drew", lastName: "Price", favoriteColor: "Yellow", favoriteAnimal: "Elephant" },
-];
-
-// function filter(collection, cb) {
-//     const newCollection = [];
-
-//     for (const user of collection) {
-//         if (cb(user)) {
-//             newCollection.push(user);
-//         }
-//     }
-
-//     return newCollection;
-// }
-
-
-
-// console.log(0 + parseInt('4') + 1);
-// let bpRecord = createEmployeeRecord(["Byron", "Poodle", "Mascot", 3]);
-// let updatedBpRecord = createTimeInEvent(bpRecord, "2014-02-28 1400");
-// let newEvent = updatedBpRecord.timeInEvents[0];
-
-// console.log(updatedBpRecord);
-// console.log(newEvent);
-
-// const r = createEmployeeRecord('a','b','c',1);
-// console.log(r);
-// console.log(r.familyName);
