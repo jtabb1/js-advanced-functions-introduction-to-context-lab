@@ -59,7 +59,10 @@ function wagesEarnedOnDate(eeRec, dateStr) {
     return rate * hours;
 }
 
-
+// The official solution should use out dates instead of in dates to avoid
+//  a potential error caused by running the script on a day when employees
+//  have clocked in but haven't clocked out yet.  Basing the calculation
+//  on clock out dates avoids this potential issue.
 function allWagesFor(eeRec) {
     const outs = eeRec.timeOutEvents;
     const pays = outs.map( out => wagesEarnedOnDate(eeRec,out.date) );
@@ -67,7 +70,13 @@ function allWagesFor(eeRec) {
     return pays.reduce(reducer);
 } 
 
+// The official solution heavily influenced this answer:
 function calculatePayroll(ees) {
+    return ees.reduce( (acc, cur) => acc + allWagesFor(cur), 0);
+}
+
+// Could be a slower version:
+function s_calculatePayroll(ees) {
     const eePays = ees.map( ee => allWagesFor(ee) );
     const reducer = (acc, cur) => acc + cur;
     return eePays.reduce(reducer);
