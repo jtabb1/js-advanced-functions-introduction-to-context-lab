@@ -44,7 +44,8 @@ function createTimeOutEvent(employeeRecord,dateTimeString) {
 function hoursWorkedOnDate(eeRec,dateStr) {
     const allPunchIns = eeRec.timeInEvents;
     const allPunchOuts = eeRec.timeOutEvents;
-    // In the real world there could be more than one punch in and out in a day
+    // In the real world there could be more than one punch in and out in a day,
+    //   but not in this example.
     const datePunchIn = allPunchIns.filter(punch => punch.date === dateStr);
     const punchIn = datePunchIn[0].hour;
     const datePunchOut = allPunchOuts.filter(punch => punch.date === dateStr);
@@ -58,7 +59,25 @@ function wagesEarnedOnDate(eeRec, dateStr) {
     return rate * hours;
 }
 
+
 function allWagesFor(eeRec) {
+    const outs = eeRec.timeOutEvents;
+    const pays = outs.map( out => wagesEarnedOnDate(eeRec,out.date) );
+    const reducer = (acc, cur) => acc + cur;
+    return pays.reduce(reducer);
+} 
+
+function calculatePayroll(ees) {
+    const eePays = ees.map( ee => allWagesFor(ee) );
+    const reducer = (acc, cur) => acc + cur;
+    return eePays.reduce(reducer);
+}
+
+function findEmployeeByFirstName(ees, fn) {
+    return ees.filter( ee => ee.firstName === fn )[0];  // Returns first result of the array returned by the filter
+}
+
+function vf_allWagesFor(eeRec) {    // Rewritten with a vanilla for loop
     const outs = eeRec.timeOutEvents;
     const days = outs.length;
     let wages = 0;
@@ -69,22 +88,12 @@ function allWagesFor(eeRec) {
     return wages;
 }
 
-function calculatePayroll(ees) {
+function vf_calculatePayroll(ees) {    // Rewritten with a vanilla for loop
     let total = 0;
     for (let i=0; i<ees.length; i++) {
         total += allWagesFor(ees[i]);
     }
     return total;
-}
-
-function findEmployeeByFirstName(ees, fn) {
-    const eesFd = ees.filter( ee => {
-        console.log(ee);
-        return (ee.firstName === fn);
-     } );
-    console.log(ees);
-    console.log(eesFd);
-    return eesFd[0];
 }
 
 // let src = [
@@ -97,11 +106,17 @@ function findEmployeeByFirstName(ees, fn) {
 // // console.log(findEmployeeByFirstName(emps, "Loki"));
 // findEmployeeByFirstName(emps, "Loki");
 
-// cRecord = createEmployeeRecord(["Julius", "Caesar", "General", 1000]);
-// updatedBpRecord = createTimeInEvent(cRecord, "0044-03-15 0900");
-// updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-15 1100");
+// cRecord = createEmployeeRecord(["Julius", "Caesar", "General", 27])
+// // Earns 324
+// updatedBpRecord = createTimeInEvent(cRecord, "0044-03-14 0900")
+// updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-14 2100")
+// // Earns 54
+// updatedBpRecord = createTimeInEvent(cRecord, "0044-03-15 0900")
+// updatedBpRecord = createTimeOutEvent(cRecord, "0044-03-15 1100")
+// // 324 + 54
+// const w = allWagesFor(cRecord);
 
-// console.log()
+// console.log(w);
 
 // function filterByDate(punchIns, dateStr) {
 //     if (punchIns) {}
