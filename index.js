@@ -70,7 +70,8 @@ function allWagesFor(eeRec) {
     return pays.reduce(reducer);
 } 
 
-// The official solution heavily influenced this answer:
+// The official solution influenced this function (helping to change a map + 
+//  a reduce to just one reduce without the map):
 function calculatePayroll(ees) {
     return ees.reduce( (acc, cur) => acc + allWagesFor(cur), 0);
 }
